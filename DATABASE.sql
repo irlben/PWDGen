@@ -22,7 +22,5 @@ PWD varchar(20),
 date_creation date,
 CONSTRAINT idLOG FOREIGN KEY (idLOG) REFERENCES LOGIN (id)
 )
-SELECT * FROM PWD
 
-SELECT id FROM LOGIN WHERE mail = 'ROOT@cpntben.fr' and pass = 'root'
 
