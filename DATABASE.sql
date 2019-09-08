@@ -1,0 +1,28 @@
+CREATE DATABASE BCA_PASSWORDGENERATOR
+
+CREATE TABLE LOGIN (
+id int PRIMARY KEY IDENTITY,
+nom varchar(20),
+mail varchar(40),
+pass varchar(20),
+)
+
+CREATE TABLE AUTOCONNECT (
+id int PRIMARY KEY IDENTITY,
+idLOGIN int,
+stayconnect bit,
+CONSTRAINT idLOGIN FOREIGN KEY (idLOGIN) REFERENCES LOGIN (id)
+)
+
+CREATE TABLE PWD (
+id int PRIMARY KEY IDENTITY,
+idLOG int,
+Libelle varchar(20),
+PWD varchar(20),
+date_creation date,
+CONSTRAINT idLOG FOREIGN KEY (idLOG) REFERENCES LOGIN (id)
+)
+SELECT * FROM PWD
+
+SELECT id FROM LOGIN WHERE mail = 'ROOT@cpntben.fr' and pass = 'root'
+
