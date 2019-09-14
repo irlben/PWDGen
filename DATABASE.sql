@@ -18,7 +18,7 @@ CREATE TABLE PWD (
 id int PRIMARY KEY IDENTITY,
 idLOG int,
 Libelle varchar(20),
-PWD varchar(20),
+PWD varchar(30),
 date_creation date,
 CONSTRAINT idLOG FOREIGN KEY (idLOG) REFERENCES LOGIN (id)
 )

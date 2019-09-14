@@ -16,8 +16,10 @@ namespace BCA_PasswordGenerator
         #endregion
 
         public static String IDLOGIN;
-        public static String IDLOG;
         public static String NOM;
         public static int NBPWD;
+        public static bool ConfirmViewPWD;
+
+        
     }
 }

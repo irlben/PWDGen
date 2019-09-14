@@ -15,7 +15,7 @@ namespace BCA_PasswordGenerator
     {
         public FrmPassword()
         {
-            DonnéesPubliques.IDLOG  = Convert.ToString(0); 
+            DonnéesPubliques.IDLOGIN = Convert.ToString(0); 
             InitializeComponent();
         }
         SqlConnection gObjetConnection = new SqlConnection();
@@ -25,7 +25,7 @@ namespace BCA_PasswordGenerator
         String Chiffre = "0123456789";
         String MAJ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String MIN = "abcdefghijklmnopqrstuvwxyz";
-        String CARACSPECIAUX = @"!@#$%^&*()_+|}{:?><\][';/.,""";
+        String CARACSPECIAUX = @"!@#$%^&*()_+|}{:?><\][;/.,""";
         private void FrmPassword_Load(object sender, EventArgs e)
         {
             this.Text = "Compte : "+DonnéesPubliques.NOM+ " possédant "+DonnéesPubliques.NBPWD+" mots de passe";
@@ -36,6 +36,55 @@ namespace BCA_PasswordGenerator
             DTGListPWD.Visible = false;
             LblMonCompte.Visible = false;
             PbxPicAccount.Visible = false;
+        }
+        private void UpdateTitle()
+        {
+            MaConnexion();
+            String nb1;
+            strRequete = "SELECT nom FROM LOGIN WHERE id = '" + DonnéesPubliques.IDLOGIN.ToString() + "'";
+            try
+            {
+                // instanciation de l'objet command en passant comme argument au constructeur
+                // la requete ainsi que la connexion
+                command = new SqlCommand(strRequete, gObjetConnection);
+                // Déclaration d'un objet destiné à recevoir le résultat de la requete
+
+                // affectation de cet objet (avec le résultat la requete)
+                // en utilisant la méthode ExecuteScalar() sur notre objet command
+
+                nb1 = command.ExecuteScalar().ToString();
+                DonnéesPubliques.NOM = nb1;
+
+
+
+            }
+            catch
+            {
+
+            }
+            strRequete = "SELECT COUNT(*) FROM PWD WHERE idLOG = '" + DonnéesPubliques.IDLOGIN.ToString() + "'";
+            try
+            {
+                // instanciation de l'objet command en passant comme argument au constructeur
+                // la requete ainsi que la connexion
+                command = new SqlCommand(strRequete, gObjetConnection);
+                // Déclaration d'un objet destiné à recevoir le résultat de la requete
+
+                // affectation de cet objet (avec le résultat la requete)
+                // en utilisant la méthode ExecuteScalar() sur notre objet command
+
+                nb1 = command.ExecuteScalar().ToString();
+                DonnéesPubliques.NBPWD = Convert.ToInt16(nb1);
+
+
+
+            }
+            catch
+            {
+
+            }
+            this.Text = "Compte : " + DonnéesPubliques.NOM + " possédant " + DonnéesPubliques.NBPWD + " mots de passe";
+            MaDeconnexion();
         }
         private void MaConnexion()
         {
@@ -101,6 +150,8 @@ namespace BCA_PasswordGenerator
             CHKMAJ.Visible = false;
             CHKPINCODE.Visible = false;
             ErreurTXTPWD.Visible = false;
+            LblNbPassGEN.Visible = false;
+            Trk_NbPass.Visible = false;
 
             BtnPWDSHOW.Visible = true;
             DTGListPWD.Visible = true;
@@ -121,8 +172,13 @@ namespace BCA_PasswordGenerator
             LBLGEN.BorderStyle = BorderStyle.Fixed3D;
             LBPWD.Items.Clear();
             String characters = "";
-            
-            int NBPASS = 4;
+
+            int NBPASS = Trk_NbPass.Value;
+            // Valeur par défault = 4.
+            if (NBPASS == 0)
+            {
+                NBPASS = 4;
+            }
             Random r = new Random();
             if (TRKLONG.Value > 1)
             {
@@ -175,7 +231,7 @@ namespace BCA_PasswordGenerator
 
                 DateTime sdate = DateTime.Now;
             MaConnexion();
-            strRequete = "INSERT INTO PWD (idLOG,Libelle,PWD,date_creation) VALUES ('" + DonnéesPubliques.IDLOGIN.ToString() + "','" + TXTPWD.Text + "','" + LBPWD.SelectedItem.ToString() + "','" + sdate + "')";
+            strRequete = "INSERT INTO PWD (idLOG,Libelle,PWD,date_creation) VALUES ('" + DonnéesPubliques.IDLOGIN.ToString() + "','" + TXTPWD.Text + "','" + LBPWD.SelectedItem.ToString() + "','" + String.Format("{0:dd/MM/yyyy}", sdate) + "')";
 
             try
             {
@@ -198,6 +254,8 @@ namespace BCA_PasswordGenerator
                 CHKMAJ.CheckState = 0;
                 CHKPINCODE.CheckState = 0;
                 TRKLONG.Value = 0;
+                Trk_NbPass.Value = 0;
+                UpdateTitle();
             } else
             {
                 TXTBOXERREUR.Visible = true;
@@ -224,6 +282,7 @@ namespace BCA_PasswordGenerator
             CHKMAJ.CheckState = 0;
             CHKPINCODE.CheckState = 0;
             TRKLONG.Value = 0;
+            Trk_NbPass.Value = 0;
         }
 
         private void LblGrrPWD_Click(object sender, EventArgs e)
@@ -233,44 +292,86 @@ namespace BCA_PasswordGenerator
             GERPWDMODE();
             
         }
-        private void ListePWD()
-        {
-            try
-            {
-                MaConnect.Open();
-                PWD.Fill(monDataSet, "Libelle");
-                PWD.Fill(monDataSet, "PWD");
-                PWD.Fill(monDataSet, "date_creation");
-            }
-            catch (System.Data.SqlClient.SqlException probleme)
-            {
 
-                MessageBox.Show("impossible de se connecter au serveur de base de données : " + probleme);
-            }
-            MaConnect.Close();
-        }
-        private void AFFICHEPWD ()
-        {
-            this.DTGListPWD.AllowUserToAddRows = false;
-            this.DTGListPWD.AllowUserToResizeColumns = false;
-            this.DTGListPWD.RowHeadersVisible = false;
-            this.DTGListPWD.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-
-            DataTable uneTable = new DataTable();
-            uneTable = monDataSet.Tables["Libelle"];
-            DTGListPWD.DataSource = uneTable;
-
-            DTGListPWD.AutoResizeColumns();
-            DTGListPWD.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            DTGListPWD.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
-        }
+       
 
         private void BtnPWDSHOW_Click(object sender, EventArgs e)
         {
-            DonnéesPubliques.IDLOG = DonnéesPubliques.IDLOGIN;
-            ListePWD();
-            AFFICHEPWD();
+            //DonnéesPubliques.IDLOG = DonnéesPubliques.IDLOGIN;
+            // Form FrmConfirmPWD = new FrmConfirmPWD();
+            //FrmConfirmPWD.Show();
+            DialogResult result = MessageBox.Show("Etes vous sur de vouloir accéder à vos mot de passe ?", "Autorisation d'accès aux mot de passe", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+            if (result == DialogResult.Yes)
+            {
+                DonnéesPubliques.ConfirmViewPWD = true;
+            }else
+            {
+                MessageBox.Show("Vous avez décider de répondre " + result + ".", "Refus", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            
+            if (DonnéesPubliques.ConfirmViewPWD)
+            {
+                MaConnexion(); //appel de la procédure de connexion
+
+                #region chargement de l'en-tête de la grille par code
+                DTGListPWD.Rows.Clear();
+                DTGListPWD.ReadOnly = true;
+                DTGListPWD.ColumnCount = 3; // on interdit la saisie directement dans la grille
+                                            //Définition des entêtes et de la taille des colonnes.
+                                            // Attention la numérotation des colonnes commence à 0
+                DTGListPWD.Columns[0].Name = "Libellé";
+                DTGListPWD.Columns[0].Width = 150;
+                DTGListPWD.Columns[1].Name = "Mot de passe";
+                DTGListPWD.Columns[1].Width = 150;
+                DTGListPWD.Columns[2].Name = "Date d'enregistrement";
+                DTGListPWD.Columns[2].Width = 150;
+                #endregion
+
+                #region Exécution de la requête : Le genre et le nombre de films
+                // Initialisation de la requête de selection
+                strRequete = "SELECT Libelle as 'Libellé', PWD as 'Mot de passe', date_creation as 'Date' FROM PWD WHERE (idLOG = '" + DonnéesPubliques.IDLOGIN + "')";
+                //Tentative (Try) d'xécution de la requête sur la base de données correspondante à notre connexion
+                try
+                {// Instanciation de l'objet command en passent comme argument au construteur la requête ainsi que la connexion
+                    command = new SqlCommand(strRequete, gObjetConnection);
+                    // Déclaration d'un tableau mémoire en lecture uniquement destiné à recevoir le résultat de la requête
+                    //(utilisation de la classe SqlDataReader)
+                    SqlDataReader SdrListe;
+                    // affectation de ce tableau (avec le résultat la requête)
+                    // en utilisant la méthode ExecuteReader() sur notre objet command
+                    // car plusieurs enregistrements sont renvoyés
+                    SdrListe = command.ExecuteReader();
+                    // Parcours du tableau mémoire (SqlDataReader) Tant qu'il existe une ligne à lire
+                    while (SdrListe.Read())
+                    {
+                        // Ajout dans la datagridview d'une ligne correspondant à la ligne lue dans le tableau mémoire
+                        DTGListPWD.Rows.Add(SdrListe["Libellé"], SdrListe["Mot de passe"], String.Format("{0:dd/MM/yyyy}", SdrListe["Date"]));
+                    }
+                    //Fermeture du DataReader
+                    SdrListe.Close();
+                }
+                catch (System.Data.SqlClient.SqlException probleme)
+                {
+                    MessageBox.Show("L'erreur suivante a été rencontrée :" + probleme.Message);
+                }
+                #endregion
+
+                #region mise en forme de la grille
+                DTGListPWD.Refresh();
+                // pour ajuster la grille
+                // ajustement de la largeur des colonnes
+                DTGListPWD.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                // ajustement de la hauteur des lignes : ici les lignes s'ajustent au contenu de l'en-tête de ligne
+                DTGListPWD.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllHeaders;
+                #endregion
+
+                MaDeconnexion(); 
+
+
+            }
         }
+
+
     }
     
 }

@@ -61,6 +61,8 @@ namespace BCA_PasswordGenerator
             this.sqlSelectCommand1 = new System.Data.SqlClient.SqlCommand();
             this.PWD = new System.Data.SqlClient.SqlDataAdapter();
             this.BtnPWDSHOW = new System.Windows.Forms.Button();
+            this.Trk_NbPass = new System.Windows.Forms.TrackBar();
+            this.LblNbPassGEN = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.TRKLONG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxPicAccount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DTGListPWD)).BeginInit();
@@ -68,6 +70,7 @@ namespace BCA_PasswordGenerator
             ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Trk_NbPass)).BeginInit();
             this.SuspendLayout();
             // 
             // LblGnPWD
@@ -112,16 +115,18 @@ namespace BCA_PasswordGenerator
             // 
             // TRKLONG
             // 
-            this.TRKLONG.Location = new System.Drawing.Point(7, 105);
+            this.TRKLONG.BackColor = System.Drawing.Color.AliceBlue;
+            this.TRKLONG.Location = new System.Drawing.Point(7, 161);
             this.TRKLONG.Maximum = 25;
             this.TRKLONG.Name = "TRKLONG";
+            this.TRKLONG.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.TRKLONG.Size = new System.Drawing.Size(201, 45);
             this.TRKLONG.TabIndex = 4;
             // 
             // CHKCHIFFRE
             // 
             this.CHKCHIFFRE.AutoSize = true;
-            this.CHKCHIFFRE.Location = new System.Drawing.Point(19, 145);
+            this.CHKCHIFFRE.Location = new System.Drawing.Point(19, 212);
             this.CHKCHIFFRE.Name = "CHKCHIFFRE";
             this.CHKCHIFFRE.Size = new System.Drawing.Size(56, 17);
             this.CHKCHIFFRE.TabIndex = 5;
@@ -131,7 +136,7 @@ namespace BCA_PasswordGenerator
             // CHKCARACTSP
             // 
             this.CHKCARACTSP.AutoSize = true;
-            this.CHKCARACTSP.Location = new System.Drawing.Point(105, 145);
+            this.CHKCARACTSP.Location = new System.Drawing.Point(101, 212);
             this.CHKCARACTSP.Name = "CHKCARACTSP";
             this.CHKCARACTSP.Size = new System.Drawing.Size(107, 17);
             this.CHKCARACTSP.TabIndex = 6;
@@ -141,7 +146,7 @@ namespace BCA_PasswordGenerator
             // CHKMAJ
             // 
             this.CHKMAJ.AutoSize = true;
-            this.CHKMAJ.Location = new System.Drawing.Point(19, 169);
+            this.CHKMAJ.Location = new System.Drawing.Point(19, 230);
             this.CHKMAJ.Name = "CHKMAJ";
             this.CHKMAJ.Size = new System.Drawing.Size(47, 17);
             this.CHKMAJ.TabIndex = 7;
@@ -151,7 +156,7 @@ namespace BCA_PasswordGenerator
             // CHKPINCODE
             // 
             this.CHKPINCODE.AutoSize = true;
-            this.CHKPINCODE.Location = new System.Drawing.Point(105, 169);
+            this.CHKPINCODE.Location = new System.Drawing.Point(101, 230);
             this.CHKPINCODE.Name = "CHKPINCODE";
             this.CHKPINCODE.Size = new System.Drawing.Size(77, 17);
             this.CHKPINCODE.TabIndex = 8;
@@ -161,7 +166,7 @@ namespace BCA_PasswordGenerator
             // LBLLONGUEUR
             // 
             this.LBLLONGUEUR.AutoSize = true;
-            this.LBLLONGUEUR.Location = new System.Drawing.Point(39, 89);
+            this.LBLLONGUEUR.Location = new System.Drawing.Point(39, 145);
             this.LBLLONGUEUR.Name = "LBLLONGUEUR";
             this.LBLLONGUEUR.Size = new System.Drawing.Size(133, 13);
             this.LBLLONGUEUR.TabIndex = 9;
@@ -170,7 +175,7 @@ namespace BCA_PasswordGenerator
             // TXTPWD
             // 
             this.TXTPWD.BackColor = System.Drawing.SystemColors.Window;
-            this.TXTPWD.Location = new System.Drawing.Point(61, 211);
+            this.TXTPWD.Location = new System.Drawing.Point(61, 266);
             this.TXTPWD.MaxLength = 20;
             this.TXTPWD.Name = "TXTPWD";
             this.TXTPWD.Size = new System.Drawing.Size(111, 20);
@@ -179,7 +184,7 @@ namespace BCA_PasswordGenerator
             // LBLLABEL
             // 
             this.LBLLABEL.AutoSize = true;
-            this.LBLLABEL.Location = new System.Drawing.Point(16, 214);
+            this.LBLLABEL.Location = new System.Drawing.Point(16, 273);
             this.LBLLABEL.Name = "LBLLABEL";
             this.LBLLABEL.Size = new System.Drawing.Size(39, 13);
             this.LBLLABEL.TabIndex = 11;
@@ -188,9 +193,9 @@ namespace BCA_PasswordGenerator
             // LBPWD
             // 
             this.LBPWD.FormattingEnabled = true;
-            this.LBPWD.Location = new System.Drawing.Point(19, 261);
+            this.LBPWD.Location = new System.Drawing.Point(19, 310);
             this.LBPWD.Name = "LBPWD";
-            this.LBPWD.Size = new System.Drawing.Size(341, 186);
+            this.LBPWD.Size = new System.Drawing.Size(341, 160);
             this.LBPWD.TabIndex = 12;
             // 
             // LBLSAVE
@@ -235,7 +240,7 @@ namespace BCA_PasswordGenerator
             this.LBLGEN.AutoSize = true;
             this.LBLGEN.BackColor = System.Drawing.Color.LightGreen;
             this.LBLGEN.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.LBLGEN.Location = new System.Drawing.Point(313, 243);
+            this.LBLGEN.Location = new System.Drawing.Point(313, 292);
             this.LBLGEN.Name = "LBLGEN";
             this.LBLGEN.Size = new System.Drawing.Size(47, 15);
             this.LBLGEN.TabIndex = 16;
@@ -247,7 +252,7 @@ namespace BCA_PasswordGenerator
             this.ErreurTXTPWD.AutoSize = true;
             this.ErreurTXTPWD.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ErreurTXTPWD.ForeColor = System.Drawing.Color.Red;
-            this.ErreurTXTPWD.Location = new System.Drawing.Point(173, 211);
+            this.ErreurTXTPWD.Location = new System.Drawing.Point(173, 268);
             this.ErreurTXTPWD.Name = "ErreurTXTPWD";
             this.ErreurTXTPWD.Size = new System.Drawing.Size(14, 20);
             this.ErreurTXTPWD.TabIndex = 17;
@@ -256,7 +261,7 @@ namespace BCA_PasswordGenerator
             // TXTBOXERREUR
             // 
             this.TXTBOXERREUR.BackColor = System.Drawing.Color.Red;
-            this.TXTBOXERREUR.Location = new System.Drawing.Point(57, 201);
+            this.TXTBOXERREUR.Location = new System.Drawing.Point(57, 258);
             this.TXTBOXERREUR.Multiline = true;
             this.TXTBOXERREUR.Name = "TXTBOXERREUR";
             this.TXTBOXERREUR.Size = new System.Drawing.Size(115, 40);
@@ -288,9 +293,9 @@ namespace BCA_PasswordGenerator
             // DTGListPWD
             // 
             this.DTGListPWD.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DTGListPWD.Location = new System.Drawing.Point(7, 261);
+            this.DTGListPWD.Location = new System.Drawing.Point(12, 266);
             this.DTGListPWD.Name = "DTGListPWD";
-            this.DTGListPWD.Size = new System.Drawing.Size(353, 251);
+            this.DTGListPWD.Size = new System.Drawing.Size(353, 246);
             this.DTGListPWD.TabIndex = 21;
             // 
             // MaConnect
@@ -321,7 +326,7 @@ namespace BCA_PasswordGenerator
             // 
             // sqlSelectCommand1
             // 
-            this.sqlSelectCommand1.CommandText = "SELECT Libelle, PWD, date_creation FROM PWD WHERE (idLOG = 5)";
+            this.sqlSelectCommand1.CommandText = "SELECT Libelle, PWD, date_creation FROM PWD WHERE (idLOG = )";
             this.sqlSelectCommand1.Connection = this.MaConnect;
             // 
             // PWD
@@ -331,18 +336,35 @@ namespace BCA_PasswordGenerator
             new System.Data.Common.DataTableMapping("Table", "PWD", new System.Data.Common.DataColumnMapping[] {
                         new System.Data.Common.DataColumnMapping("Libelle", "Libelle"),
                         new System.Data.Common.DataColumnMapping("PWD", "PWD"),
-                        new System.Data.Common.DataColumnMapping("date_creation", "date_càreation"),
+                        new System.Data.Common.DataColumnMapping("date_creation", "date_creation"),
                         new System.Data.Common.DataColumnMapping("id", "id")})});
             // 
             // BtnPWDSHOW
             // 
-            this.BtnPWDSHOW.Location = new System.Drawing.Point(12, 230);
+            this.BtnPWDSHOW.Location = new System.Drawing.Point(12, 235);
             this.BtnPWDSHOW.Name = "BtnPWDSHOW";
             this.BtnPWDSHOW.Size = new System.Drawing.Size(141, 25);
             this.BtnPWDSHOW.TabIndex = 22;
             this.BtnPWDSHOW.Text = "Afficher les mots de passe";
             this.BtnPWDSHOW.UseVisualStyleBackColor = true;
             this.BtnPWDSHOW.Click += new System.EventHandler(this.BtnPWDSHOW_Click);
+            // 
+            // Trk_NbPass
+            // 
+            this.Trk_NbPass.Location = new System.Drawing.Point(15, 97);
+            this.Trk_NbPass.Maximum = 20;
+            this.Trk_NbPass.Name = "Trk_NbPass";
+            this.Trk_NbPass.Size = new System.Drawing.Size(181, 45);
+            this.Trk_NbPass.TabIndex = 23;
+            // 
+            // LblNbPassGEN
+            // 
+            this.LblNbPassGEN.AutoSize = true;
+            this.LblNbPassGEN.Location = new System.Drawing.Point(27, 81);
+            this.LblNbPassGEN.Name = "LblNbPassGEN";
+            this.LblNbPassGEN.Size = new System.Drawing.Size(161, 13);
+            this.LblNbPassGEN.TabIndex = 24;
+            this.LblNbPassGEN.Text = "Nombre de mot de passe généré";
             // 
             // FrmPassword
             // 
@@ -351,6 +373,8 @@ namespace BCA_PasswordGenerator
             this.BackColor = System.Drawing.Color.AliceBlue;
             this.ClientSize = new System.Drawing.Size(372, 524);
             this.ControlBox = false;
+            this.Controls.Add(this.LblNbPassGEN);
+            this.Controls.Add(this.Trk_NbPass);
             this.Controls.Add(this.BtnPWDSHOW);
             this.Controls.Add(this.DTGListPWD);
             this.Controls.Add(this.PbxPicAccount);
@@ -385,6 +409,7 @@ namespace BCA_PasswordGenerator
             ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Trk_NbPass)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -422,5 +447,7 @@ namespace BCA_PasswordGenerator
         private System.Data.SqlClient.SqlCommand sqlSelectCommand1;
         private System.Data.SqlClient.SqlDataAdapter PWD;
         private System.Windows.Forms.Button BtnPWDSHOW;
+        private System.Windows.Forms.TrackBar Trk_NbPass;
+        private System.Windows.Forms.Label LblNbPassGEN;
     }
 }
